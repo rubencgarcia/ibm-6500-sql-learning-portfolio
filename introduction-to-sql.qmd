@@ -1,0 +1,74 @@
+---
+title: "Introduction to SQL: Course Completion and Learning Notes"
+author: "Your Full Name"
+date: today
+engine: knitr
+format:
+  html:
+    toc: true
+    toc-title: "Contents"
+    toc-depth: 3
+    number-sections: true
+    smooth-scroll: true
+    embed-resources: true
+---
+
+# IBM 6500 SQL Learning Portfolio
+
+**Student:** Your Name\
+**Course:** IBM 6500
+
+This portfolio contains my DataCamp course-completion evidence and learning notes for SQL and BigQuery.
+
+## Reports
+
+- Introduction to SQL
+
+![Ruben Garcia SQL Certification](certificate.pdf)
+
+- Introduction to BigQuery (to be completed)
+- Intermediate SQL (to be completed)
+
+# Chapter Main Points
+
+The SQL training has incredible amounts of definition between key words, concepts, and differences particularly the differences between a data base and being able to extract specific data from the entity of information provided.
+
+| ***Databases***
+| System for managing data that allows us to store data reliable; retrieve information efficiently, and manipulate data systematically.
+
+| Power web, mobile, and other applications as well as data analysis and reporting.
+
+## SQL Basics
+
+- Structured Query Language
+
+- Allows for researchers to use column and row specific language in order to extract particular amounts of data
+
+- This allows researchers to process information clearly and be able to present specific findings to others
+
+- SQL is a language all about working with data
+
+## Major SQL Foundations
+
+> ```sql
+> SELECT column_1, column_2
+> FROM table_1
+> ```
+
+Each column and table will be labeled depending on what the researcher is currently trying to extract.
+
+> ```sql
+> SELECT column_1, column_2
+> FROM Table_1
+> ORDER BY column_1 DESC
+> ```
+
+DESC will present the information in DESCending order!
+
+Although these functions are simple; they surprisingly have such power from the databases that allows researchers to seamlessly be able to extract, digest, and be able to present specific data.
+
+# Appendix
+
+## Appendix: Publication Links
+
+[GitHub Repository](https://github.com/rubencgarcia/ibm-6500-sql-learning-portfolio) [Published Introduction to SQL Report](https://rubencgarcia.github.io/ibm-6500-sql-learning-portfolio/introduction-to-sql.html)
