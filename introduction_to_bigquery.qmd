@@ -1,0 +1,209 @@
+---
+title: "Introduction to BigQuery: Course Completion and Learning Notes"
+author: "Ruben Garcia"
+date: today
+engine: knitr
+
+execute:
+  eval: false
+
+format:
+  html:
+    toc: true
+    toc-title: "Contents"
+    toc-depth: 3
+    number-sections: true
+    smooth-scroll: true
+    embed-resources: true
+---
+
+# BigQuery
+
+![BigQuery: Certification of Completion](BigQuerycertificate.pdf)
+
+## Chapter 1.
+
+### Main Ideas
+
+**BigQuery** is Google Cloud's fully managed (serverless) data warehouse built for analytics (OLAP), not for the many small read/write transactions a normal app database handles (OLTP). Three ideas make it different from a traditional database:
+
+- **Storage and compute are separate.** Data sits in columnar storage, and queries run on a pool of compute workers called *slots*. Each can scale independently, so I never size or manage a server.
+
+- **Columnar storage.** Each column is stored separately, so a query reads only the columns it names. This is why selecting fewer columns makes a query cheaper and faster.
+
+- **Massively parallel execution.** A big query is split into pieces that run across many workers at once, then the results are combined.
+
+### BigQuery Terminology
+
+| ***Project:*** Top-level container tied to billing and permissions
+
+| ***Slot:*** A unit of compute used to run a query
+
+| ***Clustering:*** Sorting date within a table by chosen columns to reduce scanning
+
+### Important SQL Terminology
+
+Highlights from Chapter one brought up fully qualified table names and how to gather data to create a table
+
+SELECT, FROM, WHERE, LIMIT
+
+### Example
+
+```{sql}
+SELECT
+  customer_id,
+  SAFE_CAST(order_total AS FLOAT64) AS order_total_num,
+  DATE(order_timestamp) AS order_date
+FROM `project_name.dataset_name.orders`
+WHERE DATE(order_timestamp) BETWEEN '2026-01-01' AND '2026-03-31'
+ORDER BY order_date;
+```
+
+#### Explanation
+
+I am using a placeholder for false data (since there is not date to extract from beyond the lesson itself). This reads only two columns and only the rows from 2026 forward.
+
+### CEP Application
+
+Marketing data (GA4 exports, ad platform exports, survey responses) gets large quickly. BigQuery lets me store it in one warehouse and query it without managing infrastructure.
+
+## Chapter 2.
+
+### Main Ideas
+
+This chapter reviews core SQL inside BigQuery and covers how data gets into BigQuery and how it is typed. Every column has a data type, and choosing or converting types correctly matters because dates, numbers, and text behave differently in filters and calculations. BigQuery also supports nested and repeated data (`STRUCT` and `ARRAY`), which is common in exports like GA4.
+
+### BigQuery Terminology
+
+| ***Schema:*** the list of column names and types for a table. I should check it after loading to confirm dates and numbers were not read as text.
+
+| ***Nested/repeated fields:*** a `STRUCT` groups related fields in one column; an `ARRAY` holds multiple values in one row.
+
+### Important SQL syntax
+
+`DATE()`, `EXTRACT(part FROM date)`, `FORMAT_DATE()`
+
+### Example
+
+``` sql
+SELECT
+  customer_id,
+  SAFE_CAST(order_total AS FLOAT64) AS order_total_num,
+  DATE(order_timestamp) AS order_date
+FROM `project_name.dataset_name.orders`
+WHERE DATE(order_timestamp) BETWEEN '2026-01-01' AND '2026-03-31'
+ORDER BY order_date;```
+```
+
+### Explanation
+
+The query converts text totals to numbers. converts timestamps to dates, filters to one quarter, and sorts by date. This is the typical cleaning step that follows a large amount of data.
+
+### CEP Application
+
+Survey exports and campaign files often arrive with numbers stored as text and dates in inconsistent formats. Checking the schema and casting types makes the data trustworthy before any analysis. `UNNEST` is essential for flattening GA4 event parameters.
+
+## Chapter 3.
+
+### Main Ideas
+
+This chapter moves from basic retrieval to analysis. Three tools stand out:
+
+- **Aggregations** collapse many rows into summaries (counts, sums, averages) per group.
+
+- **Common table expressions (CTEs)** let me name an intermediate result and build a query in readable steps instead of one tangled query.
+
+- **Window functions** calculate across related rows (running totals, rankings, previous-row comparisons) *without* collapsing the rows the way `GROUP BY` does.
+
+### BigQuery Terminology
+
+> ***approx-count-distinct:*** offers a quick estimation of the count of distinct values, particularly beneficial when dealing with large datasets, providing faster results while maintaining reasonable accuracy in BigQuery. In this query, we are counting the distinct number of order_ids as unique orders and grouping the results by 'customer-id'.
+
+| ***Window / partition:*** the group of rows a window function looks at; `PARTITION BY` defines the groups and `ORDER BY` defines the order inside each.
+
+### Important SQL syntax
+
+- `GROUP BY`, `HAVING`
+
+- `ROW_NUMBER()`, `RANK()`, `LAG()`, `LEAD()`, `SUM(...) OVER (...)`
+
+- `OVER (PARTITION BY ... ORDER BY ...)`
+
+### Example
+
+```{sql}
+WITH daily_sessions AS (
+  SELECT
+    DATE(session_start) AS session_date,
+    traffic_source,
+    COUNT(DISTINCT session_id) AS sessions
+  FROM `project_name.dataset_name.sessions`
+  GROUP BY session_date, traffic_source
+)
+SELECT
+  session_date,
+  traffic_source,
+  sessions,
+  SUM(sessions) OVER (
+    PARTITION BY traffic_source
+    ORDER BY session_date
+  ) AS running_sessions
+FROM daily_sessions
+ORDER BY traffic_source, session_date;
+```
+
+### Explanation
+
+The CTE first rolls sessions up to one row per day per source. The main query then adds a running total per source with a window function. Each day's row stays visible while the cumulative total grows, which `GROUP BY` alone cannot do.
+
+### CEP Application
+
+This pattern fits channel performance reporting: daily traffic by source, running totals toward a monthly goal, and ranking campaigns. A CTE keeps multi-step marketing logic (clean → aggregate → compare) readable and reusable. `QUALIFY ROW_NUMBER() OVER (...) = 1` is a compact way to keep the latest or top record per group.
+
+## Chapter 4.
+
+### Main Ideas
+
+**Data Management and Optimization**
+
+Real analysis usually needs more than one table. Joins combine tables on a shared key. DML statements change data inside tables. Optimization means getting the same answer while scanning fewer bytes, which lowers cost and speeds up results.
+
+### BigQuery Terminology
+
+| ***Optimization habits:*** select only needed columns, filter on partition columns, use clustering, avoid `SELECT *`, preview data instead of running exploratory queries, and remember `LIMIT` does not reduce bytes scanned on its own.
+
+| ***Join types:*** `INNER` (matches only), `LEFT`/`RIGHT` (keep all rows from one side), `FULL OUTER` (keep everything), `CROSS` (every combination).
+
+### Important SQL syntax
+
+`PARTITION BY` and `CLUSTER BY` in table creation
+
+### Example
+
+``` sql
+SELECT
+  c.campaign_name,
+  COUNT(r.response_id) AS responses
+FROM `project_name.dataset_name.campaigns` AS c
+LEFT JOIN `project_name.dataset_name.survey_responses` AS r
+  ON c.campaign_id = r.campaign_id
+GROUP BY c.campaign_name;```
+```
+
+### Explanation
+
+A `LEFT JOIN` keeps every campaign even if it received no responses, showing zero instead of dropping it. An `INNER JOIN` would hide campaigns with no responses, which could mislead a report.
+
+### CEP Application
+
+Joining is how I connect survey data, GA4 behavior, and campaign or customer attributes into one analysis. DML and CTAS let me create cleaned, reusable tables for reporting. Partitioning and clustering keep recurring marketing queries affordable.
+
+## Conclusion and Reflection
+
+Bigquery really does as the name suggests and the examples are just a glimpse on what the function has to offer.
+
+I found the **most useful concepts:** The project \> dataset \> table structure, checking the bytes estimate before running, `SAFE_CAST`, CTEs, window functions, and understanding that columnar storage rewards selecting only needed columns.
+
+The sections that took me the longest was the connecting functions. Keeping `PARTITION BY` and `ORDER BY` straight, nested and repeated fields, and choosing the right join type. I kept having to ask for hint, so extra practice will be needed.
+
+Overall; will more than likely be utilizing BigQuery in my CEP research topic as it will help combine the research from many different, and large, sources.
