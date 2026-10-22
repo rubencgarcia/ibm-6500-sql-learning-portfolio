@@ -1,0 +1,182 @@
+---
+
+---
+
+---
+title: "Intermediate SQL: Course Completion and Learning Notes"
+author: "Ruben Carrera Garcia"
+date: today
+format:
+  html:
+    theme: teal
+    toc: true
+    toc-title: "Contents"
+    toc-depth: 3
+    number-sections: true
+    smooth-scroll: true
+    embed-resources: true
+---
+
+# Course-Completion Evidence
+
+I successfully completed the **Intermediate SQL** course on DataCamp via the IBM 6500 classroom on October 21, 2026, earning 3,950 XP across 4 hours of instruction and practical exercises.
+
+![DataCamp Intermediate SQL Statement of Accomplishment](images/intermediate-sql-certificate.png)
+
+------------------------------------------------------------------------
+
+# Learning Notes and Key Takeaways
+
+## Discover Filtering with SQL
+
+### Main Ideas
+
+Filtering allows analysts to isolate specific subsets of data based on precise conditional statements. Beyond standard comparison operators (`=`, `>`, `<`), intermediate filtering leverages logical operators (`AND`, `OR`, `NOT`), range selection (`BETWEEN`), set matching (`IN`), wildcard pattern matching (`LIKE`, `ILIKE`), and null value detection (`IS NULL`, `IS NOT NULL`).
+
+### Important SQL Syntax
+
+- `WHERE condition_1 AND condition_2`
+- `WHERE column IN ('value1', 'value2')`
+- `WHERE column LIKE 'Pattern%'` (`%` matches multiple characters, `_` matches single character)
+- `WHERE column IS NULL`
+
+### When to Use It
+
+Use advanced filtering to segment audiences, isolate specific digital marketing campaign channels, evaluate performance across targeted date windows, or exclude incomplete tracking records.
+
+### SQL Example
+
+\`\`\`sql SELECT campaign_id, channel, ad_clicks, conversions FROM campaign_performance WHERE channel IN ('paid_search', 'display') AND conversions IS NOT NULL AND campaign_name LIKE 'Fall_Promo%';
+
+### Explanation
+
+This query filters the `campaign_performance` table to retrieve only rows where the channel is either `paid_search` or `display`, where `conversions` data is non-null, and where the `campaign_name` starts with "Fall_Promo".
+
+### CEP Application
+
+In a digital marketing CEP analysis, filtering isolates high-value customer interactions or specific paid ad channels (e.g., Google Ads vs. Meta Ads) to analyze targeted campaign return on ad spend (ROAS).
+
+## Get Acquainted with Aggregation
+
+### Main Ideas
+
+Aggregate functions perform mathematical operations across a set of values in a column and return a single summary value. Core functions include `COUNT()`, `SUM()`, `AVG()`, `MIN()`, and `MAX()`. When paired with arithmetic operators, aggregate functions help compute metrics like conversion rates or average order values.
+
+### Important SQL Syntax
+
+- `COUNT(column_name)` / `COUNT(DISTINCT column_name)`
+
+- `AVG(column_name)`
+
+- `SUM(column_name)`
+
+- `ROUND(AVG(column_name), 2)`
+
+### When to Use It
+
+Use aggregate functions to compute high-level Key Performance Indicators (KPIs), such as total revenue, overall website conversion rate, average time on page, or distinct active user counts.
+
+### SQL Example
+
+SELECT COUNT(DISTINCT user_id) AS unique_visitors, SUM(revenue) AS total_revenue, ROUND(AVG(order_value), 2) AS avg_order_value FROM ecom_transactions WHERE transaction_status = 'completed';
+
+### Explanation
+
+This query counts unique users who made a purchase, sums total revenue generated from completed transactions, and computes the average order value rounded to two decimal places.
+
+### CEP Application
+
+Aggregate functions allow marketers to synthesize raw transaction logs into executive summary metrics, such as overall platform Gross Merchandise Value (GMV) or unique customer reach.
+
+## Sorting and Grouping
+
+### Main Ideas
+
+`GROUP BY` categorizes records into summary groups based on shared values in one or more columns, allowing aggregate calculations per category. The `HAVING` clause filters these grouped results **after** aggregations are calculated, whereas `WHERE` filters individual rows **before** grouping. Results are ordered using `ORDER BY` (ascending by default, or `DESC`).
+
+### Important SQL Syntax
+
+- `GROUP BY column_1, column_2`
+
+- `HAVING aggregate_function(column) > value`
+
+- `ORDER BY aggregate_value DESC`
+
+### When to Use It
+
+Use `GROUP BY` and `HAVING` when evaluating metric performance broken down by specific segments—such as device category, marketing channel, or product tier—and filtering out low-volume categories.
+
+### SQL Example
+
+SELECT airline, COUNT(flight_id) AS flight_count, AVG(delay) AS avg_delay FROM flights WHERE flight_status = 'arrived' GROUP BY airline HAVING AVG(delay) \> 5 ORDER BY avg_delay DESC;
+
+### Explanation
+
+This query filters for completed flights (`WHERE`), groups the dataset by airline (`GROUP BY`), calculates average delay per airline, keeps only airlines with an average delay over 5 minutes (`HAVING`), and sorts from highest to lowest delay (`ORDER BY`).
+
+### CEP Application
+
+In marketing analytics, this pattern enables campaign attribution grouping—evaluating conversion rates across traffic sources while filtering out channels with under 100 sessions to ensure statistical significance.
+
+## Write Clean Queries
+
+### Main Ideas
+
+Writing clean queries involves using uppercase SQL keywords, clear aliasing (`AS`), consistent indentation, logical formatting, and conditional logic with `CASE WHEN`. Conditional aggregations combine `CASE WHEN` inside aggregate functions to compute segment-specific summaries in a single pass.
+
+### Important SQL Syntax
+
+- `CASE WHEN condition THEN output ELSE default END`
+
+- `AVG(CASE WHEN condition THEN column END) AS conditional_avg`
+
+- `COUNT(CASE WHEN condition THEN 1 END) AS conditional_count`
+
+### When to Use It
+
+Use `CASE WHEN` to bucket numerical data into categorical tiers (e.g., High/Medium/Low engagement) or to calculate custom conditional metrics without creating separate queries.
+
+### SQL Example
+
+SELECT plane_type, COUNT(flight_id) AS flight_count, COUNT(DISTINCT airline) AS airline_count, AVG(distance) AS avg_distance, AVG(CASE WHEN distance \> 3000 THEN distance END) AS avg_long_haul_distance, COUNT(CASE WHEN distance \> 3000 THEN flight_id END) AS long_haul_count FROM flights WHERE flight_status != 'canceled' GROUP BY plane_type HAVING COUNT(flight_id) \> 100;
+
+### Explanation
+
+This query groups non-canceled flights by aircraft type for high-volume routes (\>100 flights). It calculates overall average distance alongside conditional metrics that evaluate long-haul flights (\>3,000 miles) in parallel columns.
+
+### CEP Application
+
+In GA4 or e-commerce analysis, conditional aggregations allow marketers to calculate cart abandonment rates, high-value user segment ratios, or channel-specific conversion percentages within a single consolidated report.
+
+# Overall Reflection and Series Synthesis
+
+### Key Patterns & Insights
+
+The most valuable pattern mastered in this course is conditional aggregation (`SUM/AVG(CASE WHEN ...)`), along with the distinction between `WHERE` and `HAVING`. Understanding that `WHERE` filters raw row-level records prior to grouping while `HAVING` filters aggregated metrics post-grouping resolves common execution errors.
+
+### Series Progress & Extension
+
+- **Introduction to SQL:** Established core relational database concepts, basic `SELECT`, `WHERE`, and simple `ORDER BY` logic.
+
+- **Introduction to BigQuery:** Extended basic SQL into Google Cloud Platform (GCP), introducing massive scale serverless data warehousing, web UI execution, and Google Analytics 4 (GA4) export schema structures.
+
+- **Intermediate SQL:** Advanced query capabilities by combining multi-layered filtering, complex conditional aggregates, grouped summary statistics, and structured query readability.
+
+### BigQuery & Marketing CEP Application
+
+In Google BigQuery, these intermediate techniques directly apply to analyzing nested GA4 event logs and CRM transactional datasets. Using conditional aggregation inside `GROUP BY` blocks allows rapid cohort identification, channel attribution comparisons, and customer lifetime value (CLV) segmentation for the MSDM Culminating Experience Project.
+
+### Portfolio Reference Plan
+
+I will regularly consult the conditional aggregation (`CASE WHEN`) syntax and `HAVING` clause ordering structures when writing analytical queries in BigQuery for marketing performance dashboards.
+
+# Appendix: Publication Links
+
+- GitHub Repository
+
+- Published Intermediate SQL Report
+
+- Published Portfolio Landing Page
+
+```         
+```

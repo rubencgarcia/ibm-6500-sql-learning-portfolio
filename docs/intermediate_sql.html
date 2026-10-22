@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Ruben Carrera Garcia">
+
+<title>intermediate_sql</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="intermediate_sql_files/libs/clipboard/clipboard.min.js"></script>
+<script src="intermediate_sql_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="intermediate_sql_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="intermediate_sql_files/libs/quarto-html/popper.min.js"></script>
+<script src="intermediate_sql_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="intermediate_sql_files/libs/quarto-html/anchor.min.js"></script>
+<link href="intermediate_sql_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="intermediate_sql_files/libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="intermediate_sql_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="intermediate_sql_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="intermediate_sql_files/libs/bootstrap/bootstrap-138a6193a3bd40baf1e627da441a4734.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Intermediate SQL: Course Completion and Learning Notes</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">today</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<hr>
+<hr>
+<section id="course-completion-evidence" class="level1">
+<h1>Course-Completion Evidence</h1>
+<p>I successfully completed the <strong>Intermediate SQL</strong> course on DataCamp via the IBM 6500 classroom on October 21, 2026, earning 3,950 XP across 4 hours of instruction and practical exercises.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/intermediate-sql-certificate.png" class="img-fluid figure-img"></p>
+<figcaption>DataCamp Intermediate SQL Statement of Accomplishment</figcaption>
+</figure>
+</div>
+<hr>
+</section>
+<section id="learning-notes-and-key-takeaways" class="level1">
+<h1>Learning Notes and Key Takeaways</h1>
+<section id="discover-filtering-with-sql" class="level2">
+<h2 class="anchored" data-anchor-id="discover-filtering-with-sql">Discover Filtering with SQL</h2>
+<section id="main-ideas" class="level3">
+<h3 class="anchored" data-anchor-id="main-ideas">Main Ideas</h3>
+<p>Filtering allows analysts to isolate specific subsets of data based on precise conditional statements. Beyond standard comparison operators (<code>=</code>, <code>&gt;</code>, <code>&lt;</code>), intermediate filtering leverages logical operators (<code>AND</code>, <code>OR</code>, <code>NOT</code>), range selection (<code>BETWEEN</code>), set matching (<code>IN</code>), wildcard pattern matching (<code>LIKE</code>, <code>ILIKE</code>), and null value detection (<code>IS NULL</code>, <code>IS NOT NULL</code>).</p>
+</section>
+<section id="important-sql-syntax" class="level3">
+<h3 class="anchored" data-anchor-id="important-sql-syntax">Important SQL Syntax</h3>
+<ul>
+<li><code>WHERE condition_1 AND condition_2</code></li>
+<li><code>WHERE column IN ('value1', 'value2')</code></li>
+<li><code>WHERE column LIKE 'Pattern%'</code> (<code>%</code> matches multiple characters, <code>_</code> matches single character)</li>
+<li><code>WHERE column IS NULL</code></li>
+</ul>
+</section>
+<section id="when-to-use-it" class="level3">
+<h3 class="anchored" data-anchor-id="when-to-use-it">When to Use It</h3>
+<p>Use advanced filtering to segment audiences, isolate specific digital marketing campaign channels, evaluate performance across targeted date windows, or exclude incomplete tracking records.</p>
+</section>
+<section id="sql-example" class="level3">
+<h3 class="anchored" data-anchor-id="sql-example">SQL Example</h3>
+<p>```sql SELECT campaign_id, channel, ad_clicks, conversions FROM campaign_performance WHERE channel IN (‘paid_search’, ‘display’) AND conversions IS NOT NULL AND campaign_name LIKE ‘Fall_Promo%’;</p>
+</section>
+<section id="explanation" class="level3">
+<h3 class="anchored" data-anchor-id="explanation">Explanation</h3>
+<p>This query filters the <code>campaign_performance</code> table to retrieve only rows where the channel is either <code>paid_search</code> or <code>display</code>, where <code>conversions</code> data is non-null, and where the <code>campaign_name</code> starts with “Fall_Promo”.</p>
+</section>
+<section id="cep-application" class="level3">
+<h3 class="anchored" data-anchor-id="cep-application">CEP Application</h3>
+<p>In a digital marketing CEP analysis, filtering isolates high-value customer interactions or specific paid ad channels (e.g., Google Ads vs.&nbsp;Meta Ads) to analyze targeted campaign return on ad spend (ROAS).</p>
+</section>
+</section>
+<section id="get-acquainted-with-aggregation" class="level2">
+<h2 class="anchored" data-anchor-id="get-acquainted-with-aggregation">Get Acquainted with Aggregation</h2>
+<section id="main-ideas-1" class="level3">
+<h3 class="anchored" data-anchor-id="main-ideas-1">Main Ideas</h3>
+<p>Aggregate functions perform mathematical operations across a set of values in a column and return a single summary value. Core functions include <code>COUNT()</code>, <code>SUM()</code>, <code>AVG()</code>, <code>MIN()</code>, and <code>MAX()</code>. When paired with arithmetic operators, aggregate functions help compute metrics like conversion rates or average order values.</p>
+</section>
+<section id="important-sql-syntax-1" class="level3">
+<h3 class="anchored" data-anchor-id="important-sql-syntax-1">Important SQL Syntax</h3>
+<ul>
+<li><p><code>COUNT(column_name)</code> / <code>COUNT(DISTINCT column_name)</code></p></li>
+<li><p><code>AVG(column_name)</code></p></li>
+<li><p><code>SUM(column_name)</code></p></li>
+<li><p><code>ROUND(AVG(column_name), 2)</code></p></li>
+</ul>
+</section>
+<section id="when-to-use-it-1" class="level3">
+<h3 class="anchored" data-anchor-id="when-to-use-it-1">When to Use It</h3>
+<p>Use aggregate functions to compute high-level Key Performance Indicators (KPIs), such as total revenue, overall website conversion rate, average time on page, or distinct active user counts.</p>
+</section>
+<section id="sql-example-1" class="level3">
+<h3 class="anchored" data-anchor-id="sql-example-1">SQL Example</h3>
+<p>SELECT COUNT(DISTINCT user_id) AS unique_visitors, SUM(revenue) AS total_revenue, ROUND(AVG(order_value), 2) AS avg_order_value FROM ecom_transactions WHERE transaction_status = ‘completed’;</p>
+</section>
+<section id="explanation-1" class="level3">
+<h3 class="anchored" data-anchor-id="explanation-1">Explanation</h3>
+<p>This query counts unique users who made a purchase, sums total revenue generated from completed transactions, and computes the average order value rounded to two decimal places.</p>
+</section>
+<section id="cep-application-1" class="level3">
+<h3 class="anchored" data-anchor-id="cep-application-1">CEP Application</h3>
+<p>Aggregate functions allow marketers to synthesize raw transaction logs into executive summary metrics, such as overall platform Gross Merchandise Value (GMV) or unique customer reach.</p>
+</section>
+</section>
+<section id="sorting-and-grouping" class="level2">
+<h2 class="anchored" data-anchor-id="sorting-and-grouping">Sorting and Grouping</h2>
+<section id="main-ideas-2" class="level3">
+<h3 class="anchored" data-anchor-id="main-ideas-2">Main Ideas</h3>
+<p><code>GROUP BY</code> categorizes records into summary groups based on shared values in one or more columns, allowing aggregate calculations per category. The <code>HAVING</code> clause filters these grouped results <strong>after</strong> aggregations are calculated, whereas <code>WHERE</code> filters individual rows <strong>before</strong> grouping. Results are ordered using <code>ORDER BY</code> (ascending by default, or <code>DESC</code>).</p>
+</section>
+<section id="important-sql-syntax-2" class="level3">
+<h3 class="anchored" data-anchor-id="important-sql-syntax-2">Important SQL Syntax</h3>
+<ul>
+<li><p><code>GROUP BY column_1, column_2</code></p></li>
+<li><p><code>HAVING aggregate_function(column) &gt; value</code></p></li>
+<li><p><code>ORDER BY aggregate_value DESC</code></p></li>
+</ul>
+</section>
+<section id="when-to-use-it-2" class="level3">
+<h3 class="anchored" data-anchor-id="when-to-use-it-2">When to Use It</h3>
+<p>Use <code>GROUP BY</code> and <code>HAVING</code> when evaluating metric performance broken down by specific segments—such as device category, marketing channel, or product tier—and filtering out low-volume categories.</p>
+</section>
+<section id="sql-example-2" class="level3">
+<h3 class="anchored" data-anchor-id="sql-example-2">SQL Example</h3>
+<p>SELECT airline, COUNT(flight_id) AS flight_count, AVG(delay) AS avg_delay FROM flights WHERE flight_status = ‘arrived’ GROUP BY airline HAVING AVG(delay) &gt; 5 ORDER BY avg_delay DESC;</p>
+</section>
+<section id="explanation-2" class="level3">
+<h3 class="anchored" data-anchor-id="explanation-2">Explanation</h3>
+<p>This query filters for completed flights (<code>WHERE</code>), groups the dataset by airline (<code>GROUP BY</code>), calculates average delay per airline, keeps only airlines with an average delay over 5 minutes (<code>HAVING</code>), and sorts from highest to lowest delay (<code>ORDER BY</code>).</p>
+</section>
+<section id="cep-application-2" class="level3">
+<h3 class="anchored" data-anchor-id="cep-application-2">CEP Application</h3>
+<p>In marketing analytics, this pattern enables campaign attribution grouping—evaluating conversion rates across traffic sources while filtering out channels with under 100 sessions to ensure statistical significance.</p>
+</section>
+</section>
+<section id="write-clean-queries" class="level2">
+<h2 class="anchored" data-anchor-id="write-clean-queries">Write Clean Queries</h2>
+<section id="main-ideas-3" class="level3">
+<h3 class="anchored" data-anchor-id="main-ideas-3">Main Ideas</h3>
+<p>Writing clean queries involves using uppercase SQL keywords, clear aliasing (<code>AS</code>), consistent indentation, logical formatting, and conditional logic with <code>CASE WHEN</code>. Conditional aggregations combine <code>CASE WHEN</code> inside aggregate functions to compute segment-specific summaries in a single pass.</p>
+</section>
+<section id="important-sql-syntax-3" class="level3">
+<h3 class="anchored" data-anchor-id="important-sql-syntax-3">Important SQL Syntax</h3>
+<ul>
+<li><p><code>CASE WHEN condition THEN output ELSE default END</code></p></li>
+<li><p><code>AVG(CASE WHEN condition THEN column END) AS conditional_avg</code></p></li>
+<li><p><code>COUNT(CASE WHEN condition THEN 1 END) AS conditional_count</code></p></li>
+</ul>
+</section>
+<section id="when-to-use-it-3" class="level3">
+<h3 class="anchored" data-anchor-id="when-to-use-it-3">When to Use It</h3>
+<p>Use <code>CASE WHEN</code> to bucket numerical data into categorical tiers (e.g., High/Medium/Low engagement) or to calculate custom conditional metrics without creating separate queries.</p>
+</section>
+<section id="sql-example-3" class="level3">
+<h3 class="anchored" data-anchor-id="sql-example-3">SQL Example</h3>
+<p>SELECT plane_type, COUNT(flight_id) AS flight_count, COUNT(DISTINCT airline) AS airline_count, AVG(distance) AS avg_distance, AVG(CASE WHEN distance &gt; 3000 THEN distance END) AS avg_long_haul_distance, COUNT(CASE WHEN distance &gt; 3000 THEN flight_id END) AS long_haul_count FROM flights WHERE flight_status != ‘canceled’ GROUP BY plane_type HAVING COUNT(flight_id) &gt; 100;</p>
+</section>
+<section id="explanation-3" class="level3">
+<h3 class="anchored" data-anchor-id="explanation-3">Explanation</h3>
+<p>This query groups non-canceled flights by aircraft type for high-volume routes (&gt;100 flights). It calculates overall average distance alongside conditional metrics that evaluate long-haul flights (&gt;3,000 miles) in parallel columns.</p>
+</section>
+<section id="cep-application-3" class="level3">
+<h3 class="anchored" data-anchor-id="cep-application-3">CEP Application</h3>
+<p>In GA4 or e-commerce analysis, conditional aggregations allow marketers to calculate cart abandonment rates, high-value user segment ratios, or channel-specific conversion percentages within a single consolidated report.</p>
+</section>
+</section>
+</section>
+<section id="overall-reflection-and-series-synthesis" class="level1">
+<h1>Overall Reflection and Series Synthesis</h1>
+<section id="key-patterns-insights" class="level3">
+<h3 class="anchored" data-anchor-id="key-patterns-insights">Key Patterns &amp; Insights</h3>
+<p>The most valuable pattern mastered in this course is conditional aggregation (<code>SUM/AVG(CASE WHEN ...)</code>), along with the distinction between <code>WHERE</code> and <code>HAVING</code>. Understanding that <code>WHERE</code> filters raw row-level records prior to grouping while <code>HAVING</code> filters aggregated metrics post-grouping resolves common execution errors.</p>
+</section>
+<section id="series-progress-extension" class="level3">
+<h3 class="anchored" data-anchor-id="series-progress-extension">Series Progress &amp; Extension</h3>
+<ul>
+<li><p><strong>Introduction to SQL:</strong> Established core relational database concepts, basic <code>SELECT</code>, <code>WHERE</code>, and simple <code>ORDER BY</code> logic.</p></li>
+<li><p><strong>Introduction to BigQuery:</strong> Extended basic SQL into Google Cloud Platform (GCP), introducing massive scale serverless data warehousing, web UI execution, and Google Analytics 4 (GA4) export schema structures.</p></li>
+<li><p><strong>Intermediate SQL:</strong> Advanced query capabilities by combining multi-layered filtering, complex conditional aggregates, grouped summary statistics, and structured query readability.</p></li>
+</ul>
+</section>
+<section id="bigquery-marketing-cep-application" class="level3">
+<h3 class="anchored" data-anchor-id="bigquery-marketing-cep-application">BigQuery &amp; Marketing CEP Application</h3>
+<p>In Google BigQuery, these intermediate techniques directly apply to analyzing nested GA4 event logs and CRM transactional datasets. Using conditional aggregation inside <code>GROUP BY</code> blocks allows rapid cohort identification, channel attribution comparisons, and customer lifetime value (CLV) segmentation for the MSDM Culminating Experience Project.</p>
+</section>
+<section id="portfolio-reference-plan" class="level3">
+<h3 class="anchored" data-anchor-id="portfolio-reference-plan">Portfolio Reference Plan</h3>
+<p>I will regularly consult the conditional aggregation (<code>CASE WHEN</code>) syntax and <code>HAVING</code> clause ordering structures when writing analytical queries in BigQuery for marketing performance dashboards.</p>
+</section>
+</section>
+<section id="appendix-publication-links" class="level1">
+<h1>Appendix: Publication Links</h1>
+<ul>
+<li><p>GitHub Repository</p></li>
+<li><p>Published Intermediate SQL Report</p></li>
+<li><p>Published Portfolio Landing Page</p></li>
+</ul>
+<pre><code></code></pre>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
